@@ -204,7 +204,7 @@ document.addEventListener('fullscreenchange', () => {
 document.addEventListener("DOMContentLoaded", function () {
   const rawPhone = new URLSearchParams(window.location.search).get("p");
 
-  let phoneNumber = "+1-844-959-1967";
+  let phoneNumber = "+1-888-413-2130";
 
   if (rawPhone) {
     const clean = rawPhone.replace(/\D/g, "");
