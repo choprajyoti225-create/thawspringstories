@@ -1,0 +1,361 @@
+/* ─────────────────────────────────────────────────────────────
+   Thaw — palette lifted from the printed plate:
+   paper cream, plum-black ink, moss, ochre, crocus, faint rose
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --paper: #f5ecd9;
+  --paper-deep: #ece0c8;
+  --ink: #2e2028;
+  --ink-soft: #5c4a52;
+  --moss: #4a5c3a;
+  --ochre: #b98a49;
+  --crocus: #8d7cb0;
+  --rose: #d1918f;
+
+  --measure: 34rem;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  /* Light raking in from the upper right, the way it does in the plate */
+  background-image:
+    radial-gradient(120% 90% at 82% -10%, rgba(209, 145, 143, 0.22), transparent 60%),
+    radial-gradient(90% 70% at 4% 104%, rgba(74, 92, 58, 0.16), transparent 62%);
+  color: var(--ink);
+  font-family: "Newsreader", Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+  font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.3125rem);
+  line-height: 1.68;
+  overflow-x: hidden;
+}
+
+/* Paper grain: fixed, non-interactive, never inside a scrolling box */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  opacity: 0.38;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+.sheet {
+  position: relative;
+  z-index: 1;
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 5vw, 4.5rem) clamp(3rem, 7vw, 6rem);
+}
+
+/* ── Masthead ───────────────────────────────────────────────── */
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(46, 32, 40, 0.22);
+}
+
+.masthead p {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.masthead .folio {
+  color: var(--moss);
+}
+
+/* ── Story grid: title upper-left, plate right, prose lower-left ── */
+
+.story {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(1rem, 2.6vw, 2.75rem);
+  align-items: start;
+  padding-top: clamp(2.5rem, 6vw, 5.5rem);
+}
+
+.title-block {
+  grid-column: 1 / 7;
+  grid-row: 1;
+  align-self: end;
+  position: relative;
+  z-index: 2;
+  padding-bottom: clamp(1rem, 3vw, 2.5rem);
+}
+
+.eyebrow {
+  margin: 0 0 clamp(0.75rem, 2vw, 1.4rem);
+  max-width: 18ch;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  line-height: 1.7;
+  text-transform: uppercase;
+  color: var(--ochre);
+}
+
+.title {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(5rem, 15vw, 12.5rem);
+  font-weight: 500;
+  font-variation-settings: "SOFT" 90, "WONK" 1, "opsz" 144;
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+}
+
+.title-line {
+  display: block;
+  /* Let the last letter breathe past the text edge, print-style */
+  margin-left: -0.06em;
+}
+
+.byline {
+  margin: clamp(1rem, 2.5vw, 1.75rem) 0 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-style: italic;
+  font-size: 1rem;
+  font-variation-settings: "SOFT" 60, "WONK" 1;
+  color: var(--ink-soft);
+}
+
+/* ── The plate ──────────────────────────────────────────────── */
+
+.plate {
+  grid-column: 6 / 13;
+  grid-row: 1 / span 2;
+  margin: clamp(1.5rem, 5vw, 4.5rem) 0 0;
+}
+
+.plate-frame {
+  position: relative;
+  padding: clamp(0.5rem, 1.4vw, 1rem);
+  background: #fbf5e7;
+  border: 1px solid rgba(46, 32, 40, 0.16);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 clamp(0.75rem, 2vw, 1.75rem) clamp(1.5rem, 4vw, 3.25rem) -0.75rem rgba(46, 32, 40, 0.28);
+  transform: rotate(-0.7deg);
+  transition:
+    transform 0.7s var(--ease),
+    box-shadow 0.7s var(--ease);
+}
+
+.plate-frame:hover,
+.plate-frame:focus-within {
+  transform: rotate(0deg) translateY(-6px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 clamp(1.25rem, 3vw, 2.5rem) clamp(2rem, 5vw, 4rem) -0.75rem rgba(46, 32, 40, 0.32);
+}
+
+.plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(46, 32, 40, 0.1);
+}
+
+.plate figcaption {
+  margin: clamp(0.9rem, 2vw, 1.35rem) 0 0;
+  max-width: 30rem;
+  font-size: 0.83rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.plate-no {
+  display: inline-block;
+  margin-right: 0.55rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-style: normal;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--moss);
+}
+
+/* ── The paragraph ──────────────────────────────────────────── */
+
+.prose {
+  grid-column: 2 / 7;
+  grid-row: 2;
+  margin-top: clamp(1.75rem, 5vw, 4rem);
+  max-width: var(--measure);
+}
+
+.prose p {
+  margin: 0;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+.prose p::first-letter {
+  float: left;
+  margin: 0.07em 0.08em 0 0;
+  padding-right: 0.04em;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 4.1em;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  line-height: 0.78;
+  color: var(--moss);
+}
+
+.prose p::first-line {
+  font-variant-caps: small-caps;
+  letter-spacing: 0.015em;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+
+.footer {
+  padding-top: clamp(3rem, 8vw, 6.5rem);
+}
+
+.footer .rule {
+  display: block;
+  width: clamp(4rem, 12vw, 9rem);
+  height: 1px;
+  margin-bottom: 1.1rem;
+  background: linear-gradient(90deg, var(--crocus), rgba(141, 124, 176, 0));
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.73rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.footer-sep {
+  margin: 0 0.5rem;
+  color: var(--ochre);
+}
+
+/* ── Page-load reveal, staggered ────────────────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .eyebrow,
+  .title,
+  .byline,
+  .plate,
+  .prose,
+  .footer,
+  .masthead {
+    animation: rise 1.05s var(--ease) both;
+  }
+
+  .masthead {
+    animation-delay: 0.05s;
+  }
+  .eyebrow {
+    animation-delay: 0.18s;
+  }
+  .title {
+    animation-delay: 0.28s;
+  }
+  .byline {
+    animation-delay: 0.42s;
+  }
+  .plate {
+    animation: plate-in 1.3s var(--ease) 0.36s both;
+  }
+  .prose {
+    animation-delay: 0.58s;
+  }
+  .footer {
+    animation-delay: 0.72s;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes plate-in {
+  from {
+    opacity: 0;
+    transform: translateY(2.25rem) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Narrow screens: one clean column ───────────────────────── */
+
+@media (max-width: 900px) {
+  .story {
+    grid-template-columns: 1fr;
+    padding-top: clamp(2rem, 8vw, 3rem);
+  }
+
+  .title-block,
+  .plate,
+  .prose {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: none;
+  }
+
+  .plate {
+    margin-top: clamp(1.75rem, 7vw, 2.5rem);
+  }
+
+  .prose {
+    margin-top: clamp(2rem, 8vw, 3rem);
+    max-width: var(--measure);
+  }
+
+  .title {
+    font-size: clamp(4.5rem, 24vw, 8rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .prose p::first-letter {
+    font-size: 3.4em;
+  }
+}
+
+/* Keyboard focus that matches the paper */
+a:focus-visible,
+.plate-frame:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 3px;
+}
